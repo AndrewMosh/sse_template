@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Server-Sent Events Example</title>
+  </head>
+  <body>
+    <h1>Server-Sent Events Example</h1>
+    <ul id="events"></ul>
+
+    <script>
+      // Подключение к серверу SSE
+      const eventsList = document.getElementById("events");
+      const eventSource = new EventSource("/sse");
+
+      // Обработка событий от сервера
+      eventSource.onmessage = function (event) {
+        const eventData = JSON.parse(event.data);
+
+        // Добавление нового события в список
+        const eventItem = document.createElement("li");
+        eventItem.textContent = `${eventData.message} (${eventData.timestamp})`;
+        eventsList.appendChild(eventItem);
+      };
+    </script>
+  </body>
+</html>
